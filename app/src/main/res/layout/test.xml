@@ -1,0 +1,171 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.MainActivity">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/viewOne"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:background="@android:color/holo_blue_light"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dfghjkl;" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dfghjkl;" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/viewTwo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:background="@android:color/holo_orange_light"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></Spinner>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="paste" />
+
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete"
+                     />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:grid="http://schemas.android.com/apk/res-auto"
+
+                android:id="@+id/choice_grid"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+                android:padding="4dp"
+
+
+                grid:alignmentMode="alignBounds"
+                grid:columnCount="3"
+                grid:rowOrderPreserved="false"
+                grid:useDefaultMargins="true">
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="sin"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="cos"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="tan"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="("
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="Pi"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:layout_height="wrap_content"
+                    android:text="X2"
+                    app:layout_columnWeight="1" />
+
+            </android.support.v7.widget.GridLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_edit"
+            app:backgroundTint="#FF0000"
+            app:layout_anchor="@id/viewOne"
+            app:layout_anchorGravity="bottom|right|end"
+            app:rippleColor="#FFF" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>
