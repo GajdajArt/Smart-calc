@@ -114,6 +114,7 @@ class ExpRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
 //            itemView.setOnLongClickListener(this)
             title = itemView.findViewById<View>(R.id.title_in_list) as TextView
+
 //            position = itemView.findViewById<View>(R.id.position) as TextView
 //            isRunning = itemView.findViewById<View>(R.id.isRunning) as Switch
     }
