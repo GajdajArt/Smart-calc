@@ -1,17 +1,14 @@
 package com.labralab.smartcalkulator.presenters
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
 import com.labralab.calk.views.fragments.ExpressionListFragment
 import com.labralab.calk.views.fragments.ParametersFragment
 import com.labralab.smartcalkulator.App
 import com.labralab.smartcalkulator.R
-import com.labralab.smartcalkulator.dependencyInjection.AppComponents
 import com.labralab.smartcalkulator.views.MainActivity
 import com.labralab.smartcalkulator.views.fragments.ExpressionFragment
+import javax.annotation.Nullable
 import javax.inject.Inject
 
 /**
@@ -48,7 +45,11 @@ class MainPresenter {
     }
 
     //Run ExpFragment()
-    fun runExpFragment(){
+    fun runExpFragment(bundle: Bundle?){
+
+        if(bundle !=  null){
+            expressionFragment.arguments = bundle
+        }
 
         val tr = supportFragmentManager.beginTransaction()
         tr.replace(R.id.dayContainer, expressionFragment)

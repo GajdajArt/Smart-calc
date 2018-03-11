@@ -1,38 +1,41 @@
 package com.labralab.smartcalkulator.presenters.adapters
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import com.labralab.calk.repository.Repository
 import com.labralab.smartcalkulator.App
 
-import com.labralab.smartcalkulator.views.MainActivity
 import com.labralab.smartcalkulator.R
 import com.labralab.smartcalkulator.models.Expression
 import com.labralab.smartcalkulator.presenters.MainPresenter
-import io.realm.Realm
-import java.util.ArrayList
 import javax.inject.Inject
 
 
 /**
  * Created by pc on 27.02.2018.
  */
-class ExpListAdapter(items: List<Expression>) : RecyclerView.Adapter<ExpRecyclerViewHolder>() {
+class ExpListAdapter(var context: Context) : RecyclerView.Adapter<ExpRecyclerViewHolder>() {
 
-    private var items: List<Expression> = ArrayList()
-    private var realm: Realm? = null
-    private var mainActivity: MainActivity? = null
+    @Inject
+    lateinit var repository: Repository
+    @Inject
+    lateinit var mainPresenter: MainPresenter
+
+    private var items: List<Expression>
 
     init {
-        this.items = items
-//        this.mainActivity = mainActivity
-        realm = Realm.getDefaultInstance()
+
+        App.appComponents.inject(this)
+        items = repository.getExpList()
 
     }
 
@@ -43,80 +46,85 @@ class ExpListAdapter(items: List<Expression>) : RecyclerView.Adapter<ExpRecycler
 
     override fun onBindViewHolder(holder: ExpRecyclerViewHolder, position: Int) {
 
-//            val item = items[position]
-//            holder.position.text = Integer.toString(position + 1) + "."
-//            holder.title.text = item.title
-//            holder.isRunning.isChecked = item.state!!
-//
-//            if (!item.paramsList!!.isEmpty()) {
-//                holder.isRunning.visibility = View.VISIBLE
-//                holder.isRunning.setOnCheckedChangeListener { _, b ->
-//
-//
-//                    realm!!.executeTransaction({ _ ->
-//
-//                        item.state = b
-//
-//                        if (b) {
-//                            mainActivity!!.volumeManager!!.cancelAlarm()
-//                            mainActivity!!.volumeManager!!.checkTheSate(item)
-//                            mainActivity!!.volumeManager!!.setDefaultParams()
-//                            mainActivity!!.volumeManager!!.startAlarmManager(item)
-//
-//                            Toast.makeText(mainActivity, "${item.title} запущен", Toast.LENGTH_SHORT).show()
-//
-//                        } else {
-//                            mainActivity!!.volumeManager!!.cancelAlarm()
-//
-//                            Toast.makeText(mainActivity, "${item.title} отключен", Toast.LENGTH_SHORT).show()
-//                        }
-//
-//                        if (items.size > 1) {
-//                            if (b) {
-//                                for (day in items) {
-//
-//                                    if (item.title != day.title) {
-//                                        day.state = false
-//                                    }
-//                                }
-//                                this@MainRecyclerViewAdapter.notifyDataSetChanged()
-//                            }
-//                        }
-//                    })
-//                }
-//
-//            } else {
-//                Toast.makeText(mainActivity, "Заполните ${item.title} параметрами", Toast.LENGTH_SHORT).show()
-//                holder.isRunning.visibility = View.INVISIBLE
-//            }
+
+
+        var item = items[position]
+
+        holder.title.text = item.title
+        holder.formula.text = item.exp
+        holder.position.text = "${position + 1}."
+
+        holder.editButton.setOnClickListener {
+            editItem(item.title)
+        }
+
+        holder.delButton.setOnClickListener {
+            deleteItem(item.title)
+        }
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
+
+    private fun deleteItem(title: String) {
+
+        val builder = AlertDialog.Builder(context)
+        builder.setMessage("Удалить $title?")
+        builder.setPositiveButton("Да", { dialog, _ ->
+
+            repository.removeExp(title)
+            items = repository.getExpList()
+            notifyDataSetChanged()
+            dialog.cancel()
+
+        })
+
+        builder.setNegativeButton("Нет", { dialog, _ ->
+            dialog.cancel()
+        })
+
+        val removeDialog = builder.create()
+        removeDialog.show()
+    }
+
+    private fun editItem(title: String) {
+
+        val bundle = Bundle()
+        bundle.putString("title", title)
+
+        mainPresenter.runExpFragment(bundle)
+
+    }
+
 }
 
-class ExpRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
+class ExpRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     @Inject
     lateinit var mainPresenter: MainPresenter
 
     var title: TextView
-    lateinit var position: TextView
-    lateinit var isRunning: Switch
+    var position: TextView
+    var formula: TextView
+    var editButton: ImageButton
+    var delButton: ImageButton
+
 
     init {
 
+        //Injecting
         App.appComponents.inject(this)
 
         itemView.setOnClickListener(this)
 
-//            itemView.setOnLongClickListener(this)
-            title = itemView.findViewById<View>(R.id.title_in_list) as TextView
+        title = itemView.findViewById<View>(R.id.title_in_list) as TextView
+        position = itemView.findViewById<View>(R.id.pos_in_list) as TextView
+        formula = itemView.findViewById<View>(R.id.exp_in_list) as TextView
+        editButton = itemView.findViewById<View>(R.id.editButton) as ImageButton
+        delButton = itemView.findViewById<View>(R.id.delButton) as ImageButton
 
-//            position = itemView.findViewById<View>(R.id.position) as TextView
-//            isRunning = itemView.findViewById<View>(R.id.isRunning) as Switch
     }
 
     override fun onClick(view: View) {
@@ -125,33 +133,6 @@ class ExpRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         bundle.putString("title", title.text.toString())
         mainPresenter.runParamsFragment(bundle)
 
-    }
-
-    override fun onLongClick(p0: View?): Boolean {
-//
-//            val builder = AlertDialog.Builder(p0!!.context)
-//            builder.setMessage("Удалить ${title.text}?")
-//            builder.setPositiveButton("Да", { dialog, _ ->
-//                removeDay(title.text.toString())
-//
-//                var activity: MainActivity = p0.context as MainActivity
-//                activity.adapterNotifyDataSetChanged()
-//
-//                dialog.cancel()
-//            })
-//
-//            builder.setNegativeButton("Нет", { dialog, _ ->
-//                dialog.cancel()
-//            })
-//            val removeDialog = builder.create()
-//            removeDialog.show()
-//
-//            return true
-//        }
-//
-//        private fun removeDay(title: String) {
-//            DayParamsList.remove(title)
-        return true
     }
 }
 

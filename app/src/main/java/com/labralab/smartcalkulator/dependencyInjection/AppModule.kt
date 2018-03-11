@@ -18,6 +18,7 @@ import javax.inject.Singleton
 @Module
 class AppModule{
 
+
     @Provides
     @Singleton
     fun provideRepository(): Repository {

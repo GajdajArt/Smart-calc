@@ -10,7 +10,6 @@ import com.labralab.smartcalkulator.App
 
 import com.labralab.smartcalkulator.models.Expression
 import com.labralab.smartcalkulator.presenters.adapters.ExpListAdapter
-import kotlinx.android.synthetic.main.fragment_expression_list.*
 import javax.inject.Inject
 
 /**
@@ -21,8 +20,6 @@ class ExpListPresenter {
     lateinit var adapter: ExpListAdapter
 
     @Inject
-    lateinit var repository: Repository
-    @Inject
     lateinit var mainPresenter: MainPresenter
 
     init {
@@ -32,7 +29,7 @@ class ExpListPresenter {
     fun runList(context: Context, mainRecyclerView: RecyclerView){
 
         val layoutManager = LinearLayoutManager(context)
-        adapter = ExpListAdapter(getData())
+        adapter = ExpListAdapter(context)
 
 
         mainRecyclerView.layoutManager = layoutManager
@@ -42,13 +39,9 @@ class ExpListPresenter {
     }
 
     fun addNewExpression(){
-        mainPresenter.runExpFragment()
+
+        mainPresenter.runExpFragment(null)
     }
 
-    private fun getData(): List<Expression>{
-
-        var lists = repository!!.getExpList()
-        return  lists
-    }
 
 }

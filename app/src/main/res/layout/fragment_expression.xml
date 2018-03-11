@@ -28,10 +28,14 @@
                     android:layout_height="wrap_content"
                     android:text="dfghjkl;" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/displayET"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dfghjkl;" />
+                    android:inputType="none"
+                    android:lines="1"
+                    android:textIsSelectable="true"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -50,17 +54,17 @@
                 </Spinner>
 
                 <Button
+                    android:id="@+id/pasteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="paste" />
 
 
-
                 <ImageButton
+                    android:id="@+id/backSpaceButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_input_delete"
-                    />
+                    android:src="@android:drawable/ic_input_delete" />
 
             </LinearLayout>
 
@@ -83,71 +87,83 @@
 
                 <Button
 
+                    android:id="@+id/sinButton"
                     android:layout_height="wrap_content"
                     android:text="sin"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/cosButton"
                     android:layout_height="wrap_content"
                     android:text="cos"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/tanButton"
                     android:layout_height="wrap_content"
                     android:text="tan"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/openButton"
                     android:layout_height="wrap_content"
                     android:text="("
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/closeButton"
                     android:layout_height="wrap_content"
                     android:text=")"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/piButton"
                     android:layout_height="wrap_content"
                     android:text="Pi"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/plusButton"
                     android:layout_height="wrap_content"
                     android:text="+"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/minusButton"
                     android:layout_height="wrap_content"
                     android:text="-"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/multiplyButton"
                     android:layout_height="wrap_content"
                     android:text="*"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/divideButton"
                     android:layout_height="wrap_content"
                     android:text="/"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/rootButton"
                     android:layout_height="wrap_content"
                     app:layout_columnWeight="1" />
 
                 <Button
 
+                    android:id="@+id/degreeButton"
                     android:layout_height="wrap_content"
                     android:text="X2"
                     app:layout_columnWeight="1" />
@@ -157,7 +173,7 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/doneButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

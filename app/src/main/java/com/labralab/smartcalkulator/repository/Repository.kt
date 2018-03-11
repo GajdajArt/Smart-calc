@@ -32,12 +32,21 @@ class Repository {
 
     fun removeExp(title: String){
 
-        realm.executeTransaction { realm ->
-            val result = realm.where(Expression::class.java)
-                    .equalTo("title", title)
-                    .findAll()
-            result.deleteAllFromRealm()
+        var flag = false
+        if(!realm.isInTransaction){
+            realm.beginTransaction()
+            flag = true
         }
+
+        val result = realm.where(Expression::class.java)
+                .equalTo("title", title)
+                .findAll()
+        result.deleteFirstFromRealm()
+
+        if(flag){
+            realm.commitTransaction()
+        }
+
     }
 
     fun getExp(title: String): Expression{
