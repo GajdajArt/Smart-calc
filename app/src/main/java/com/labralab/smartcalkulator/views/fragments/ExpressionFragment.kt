@@ -17,22 +17,28 @@ import com.labralab.smartcalkulator.presenters.ExpPresenter
 import kotlinx.android.synthetic.main.fragment_expression.*
 import javax.inject.Inject
 import android.view.View.OnFocusChangeListener
-
-
+import android.widget.Spinner
+import android.widget.TextView
+import com.labralab.calk.repository.Repository
+import io.realm.Realm
 
 
 class ExpressionFragment : Fragment() {
 
     lateinit var dispET: EditText
+    lateinit var varSp: Spinner
+    lateinit var expTitleTV: TextView
 
-    @Inject
     lateinit var expPresenter: ExpPresenter
+    @Inject
+    lateinit var repository: Repository
+    @Inject
+    lateinit var realm: Realm
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         //Injecting
         App.appComponents.inject(this)
-        expPresenter.expFrag = this
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_expression, container, false)
 
@@ -42,7 +48,16 @@ class ExpressionFragment : Fragment() {
         super.onStart()
 
 
+        expPresenter = ExpPresenter()
+        expPresenter.expFrag = this
+
+        varSp = varSpinner
+        //Setting base items to spinner
+        expPresenter.createBaseItems()
         dispET = displayET
+        expTitleTV = expTitle
+
+        expPresenter.setArgs()
 
 
         buttonOnClick(cosButton, ExpPresenter.COS) //Cos Button
@@ -61,9 +76,13 @@ class ExpressionFragment : Fragment() {
         buttonOnClick(rootButton, ExpPresenter.ROOT) //Root Button
         buttonOnClick(degreeButton, ExpPresenter.DEGREE) //Degree Button
 
+        pasteButton.setOnClickListener {
+            expPresenter.pasteVar()
+        }
+
         //Ok Button
         doneButton.setOnClickListener {
-
+            expPresenter.done()
         }
 
     }

@@ -10,6 +10,7 @@ import com.labralab.smartcalkulator.App
 
 import com.labralab.smartcalkulator.models.Expression
 import com.labralab.smartcalkulator.presenters.adapters.ExpListAdapter
+import com.labralab.smartcalkulator.views.dialogs.NewSimpleDialog
 import javax.inject.Inject
 
 /**
@@ -40,7 +41,9 @@ class ExpListPresenter {
 
     fun addNewExpression(){
 
-        mainPresenter.runExpFragment(null)
+        val newDialog = NewSimpleDialog(NewSimpleDialog.NEW_EXP_FLAG, null)
+        newDialog.show(mainPresenter.supportFragmentManager, "TAG")
+
     }
 
 

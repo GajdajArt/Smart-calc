@@ -7,6 +7,7 @@ import com.labralab.smartcalkulator.presenters.MainPresenter
 import com.labralab.smartcalkulator.presenters.adapters.ExpListAdapter
 import com.labralab.smartcalkulator.presenters.adapters.ExpRecyclerViewHolder
 import com.labralab.smartcalkulator.views.MainActivity
+import com.labralab.smartcalkulator.views.dialogs.NewSimpleDialog
 import com.labralab.smartcalkulator.views.fragments.ExpressionFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -23,5 +24,6 @@ interface AppComponents {
     fun inject(holder: ExpRecyclerViewHolder)
     fun inject(adapter: ExpListAdapter)
     fun inject(expressionFragment: ExpressionFragment)
+    fun inject(newSimpleDialog: NewSimpleDialog)
 
 }

@@ -17,14 +17,12 @@ import javax.inject.Inject
 class MainPresenter {
 
     private lateinit var mainActivity: MainActivity
-    private lateinit var supportFragmentManager: FragmentManager
-
+    lateinit var supportFragmentManager: FragmentManager
 
     @Inject
     lateinit var expressionListFragment: ExpressionListFragment
-    @Inject
+
     lateinit var expressionFragment: ExpressionFragment
-    @Inject
     lateinit var parametersFragment: ParametersFragment
 
     init {
@@ -47,6 +45,8 @@ class MainPresenter {
     //Run ExpFragment()
     fun runExpFragment(bundle: Bundle?){
 
+        expressionFragment = ExpressionFragment()
+
         if(bundle !=  null){
             expressionFragment.arguments = bundle
         }
@@ -60,6 +60,8 @@ class MainPresenter {
 
     //Run ParamsFragment()
     fun runParamsFragment(bundle: Bundle){
+
+        parametersFragment = ParametersFragment()
 
         parametersFragment.arguments = bundle
 
