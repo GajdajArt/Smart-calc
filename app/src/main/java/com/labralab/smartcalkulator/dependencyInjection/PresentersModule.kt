@@ -18,15 +18,15 @@ class PresentersModule {
         return MainPresenter()
     }
 
-    @Provides
-    fun provideExpPres(): ExpPresenter {
-        return ExpPresenter()
-    }
+//    @Provides
+//    fun provideExpPres(): ExpPresenter {
+//        return ExpPresenter()
+//    }
 
-    @Provides
-    fun provideParamsPres(): ParamsPresenter {
-        return ParamsPresenter()
-    }
+//    @Provides
+//    fun provideParamsPres(): ParamsPresenter {
+//        return ParamsPresenter()
+//    }
 
     @Provides
     fun provideExpListPres(): ExpListPresenter {

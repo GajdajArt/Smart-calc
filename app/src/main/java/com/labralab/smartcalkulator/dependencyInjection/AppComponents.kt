@@ -1,6 +1,7 @@
 package com.labralab.smartcalkulator.dependencyInjection
 
 import com.labralab.calk.views.fragments.ExpressionListFragment
+import com.labralab.calk.views.fragments.ParametersFragment
 import com.labralab.smartcalkulator.presenters.ExpListPresenter
 import com.labralab.smartcalkulator.presenters.ExpPresenter
 import com.labralab.smartcalkulator.presenters.MainPresenter
@@ -25,5 +26,6 @@ interface AppComponents {
     fun inject(adapter: ExpListAdapter)
     fun inject(expressionFragment: ExpressionFragment)
     fun inject(newSimpleDialog: NewSimpleDialog)
+    fun inject(parametersFragment: ParametersFragment)
 
 }

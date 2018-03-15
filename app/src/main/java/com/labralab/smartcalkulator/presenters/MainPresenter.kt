@@ -22,8 +22,8 @@ class MainPresenter {
     @Inject
     lateinit var expressionListFragment: ExpressionListFragment
 
-    lateinit var expressionFragment: ExpressionFragment
-    lateinit var parametersFragment: ParametersFragment
+    private lateinit var expressionFragment: ExpressionFragment
+    private lateinit var parametersFragment: ParametersFragment
 
     init {
         App.appComponents.inject(this)
@@ -62,7 +62,6 @@ class MainPresenter {
     fun runParamsFragment(bundle: Bundle){
 
         parametersFragment = ParametersFragment()
-
         parametersFragment.arguments = bundle
 
         val tr = supportFragmentManager.beginTransaction()

@@ -15,6 +15,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+
                 android:id="@+id/viewOne"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -24,42 +25,48 @@
                 android:orientation="vertical">
 
                 <TextView
+
+                    android:id="@+id/expTitleInPF"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="dfghjkl;" />
 
                 <TextView
+
+                    android:id="@+id/distInPF"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="dfghjkl;" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/viewTwo"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.6"
                 android:background="@android:color/holo_orange_light"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <Spinner
+                    android:id="@+id/resultSP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                 </Spinner>
 
                 <Button
+                    android:id="@+id/pasteResultButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="paste" />
 
 
-
                 <ImageButton
+                    android:id="@+id/saveResultButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_save"
-                    />
+                    android:src="@android:drawable/ic_menu_save" />
 
 
             </LinearLayout>
@@ -82,73 +89,73 @@
                 grid:useDefaultMargins="true">
 
                 <Button
-
+                    android:id="@+id/sevenButton"
                     android:layout_height="wrap_content"
                     android:text="7"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/eytButton"
                     android:layout_height="wrap_content"
                     android:text="8"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/nineButton"
                     android:layout_height="wrap_content"
                     android:text="9"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/fourButton"
                     android:layout_height="wrap_content"
                     android:text="4"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/fiveButton"
                     android:layout_height="wrap_content"
                     android:text="5"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/sixButton"
                     android:layout_height="wrap_content"
                     android:text="6"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/oneButton"
                     android:layout_height="wrap_content"
                     android:text="1"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/twoButton"
                     android:layout_height="wrap_content"
                     android:text="2"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/threeButton"
                     android:layout_height="wrap_content"
                     android:text="3"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/pointButton"
                     android:layout_height="wrap_content"
                     android:text="."
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/zeroButton"
                     android:layout_height="wrap_content"
                     android:text="0"
                     app:layout_columnWeight="1" />
 
                 <Button
-
+                    android:id="@+id/cancelButton"
                     android:layout_height="wrap_content"
                     android:text="C"
                     app:layout_columnWeight="1" />
@@ -158,7 +165,7 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/nextVarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

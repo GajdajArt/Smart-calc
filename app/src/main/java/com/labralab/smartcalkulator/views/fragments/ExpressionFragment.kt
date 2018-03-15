@@ -47,9 +47,7 @@ class ExpressionFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
-        expPresenter = ExpPresenter()
-        expPresenter.expFrag = this
+        expPresenter = ExpPresenter(this)
 
         varSp = varSpinner
         //Setting base items to spinner

@@ -12,9 +12,7 @@ import com.labralab.smartcalkulator.models.Expression
 import com.labralab.smartcalkulator.views.dialogs.NewSimpleDialog
 
 
-class ExpPresenter {
-
-    lateinit var expFrag: ExpressionFragment
+class ExpPresenter(var expFrag: ExpressionFragment) {
 
     lateinit var expTitle: String
     lateinit var exp: Expression
@@ -87,15 +85,23 @@ class ExpPresenter {
 
     fun pasteVar() {
 
-        if (waitVar) {
+        when {
+            expFrag.dispET.text.isEmpty() -> {
 
-            dispText.append(expFrag.varSp.selectedItem)
-            dispText.append(" ")
-            expFrag.dispET.setText(dispText.toString())
-            waitVar = false
+                dispText.append(expFrag.varSp.selectedItem)
+                dispText.append(" ")
+                expFrag.dispET.setText(dispText.toString())
+                waitVar = false
+            }
+            waitVar -> {
 
-        } else {
-            Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
+                dispText.append(expFrag.varSp.selectedItem)
+                dispText.append(" ")
+                expFrag.dispET.setText(dispText.toString())
+                waitVar = false
+
+            }
+            else -> Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -192,6 +198,9 @@ class ExpPresenter {
                 exp.exp = dispText.toString()
                 exp.varList.addAll(varList)
             }
+
+            expFrag.fragmentManager.popBackStack()
+
         } else {
             Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
         }
