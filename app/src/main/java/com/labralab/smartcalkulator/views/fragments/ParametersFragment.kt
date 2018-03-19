@@ -21,10 +21,13 @@ import javax.inject.Inject
  */
 class ParametersFragment : Fragment() {
 
-    lateinit var paramsPresenter: ParamsPresenter
+
 
     lateinit var hintTV: TextView
     lateinit var mainTV: TextView
+
+    @Inject
+    lateinit var paramsPresenter: ParamsPresenter
 
     @Inject
     lateinit var repository: Repository
@@ -32,7 +35,7 @@ class ParametersFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_parameters, container, false)
     }
@@ -42,8 +45,6 @@ class ParametersFragment : Fragment() {
 
         hintTV = expTitleInPF
         mainTV = distInPF
-
-        paramsPresenter = ParamsPresenter(this)
 
         buttonOnClick(oneButton, ParamsPresenter.ONE)
         buttonOnClick(twoButton, ParamsPresenter.TWO)

@@ -18,11 +18,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Injecting
-        App.appComponents.inject(this)
+        App.plusPresenters().inject(this)
 
         //Running firs fragment
         mainPresenter.setMainActivity(this)
         mainPresenter.runExpListFragment()
-
     }
 }

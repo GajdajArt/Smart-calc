@@ -1,6 +1,5 @@
 package com.labralab.smartcalkulator.presenters
 
-import android.widget.Spinner
 import android.widget.Toast
 import com.labralab.calk.views.fragments.ParametersFragment
 import com.labralab.smartcalkulator.models.Expression
@@ -24,7 +23,10 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
 
     private var isPoint = false
 
-    private lateinit var backSteck: Stack<String>
+    private var backSteck: Stack<String>
+
+    private var cancelClick = 0
+    private var firstNumAfterPoint = false
 
     init {
 
@@ -42,6 +44,7 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
         backSteck.push(baseExp)
 
         showHint()
+        changeMainTVContent()
 
     }
 
@@ -62,20 +65,34 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
 
     fun setNumber(flag: Int) {
 
-        bufferNum.append(flag)
+        if(firstNumAfterPoint){
+
+            bufferNum.delete(bufferNum.length - 1, bufferNum.length)
+            bufferNum.append(flag)
+            firstNumAfterPoint = false
+
+        }else{
+
+            bufferNum.append(flag)
+
+        }
         currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
         changeMainTVContent()
+        cancelClick = 0
 
     }
 
     fun insertPoint() {
 
-        if (!isPoint) {
-            bufferNum.append(".")
+        if (!isPoint && bufferNum.isNotEmpty()) {
+
+            bufferNum.append(".0")
             currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
-            backSteck.push(currentExp)
             isPoint = true
             showHint()
+            changeMainTVContent()
+            cancelClick = 0
+            firstNumAfterPoint = true
         }
     }
 
@@ -83,15 +100,45 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
 
         if (backSteck.size > 0) {
 
-            if (i > 0) {
-                i--
-                currentParamVal = exp.varList[i]!!.value
-                currentParamTitle = exp.varList[i]!!.title
-                backSteck.pop()
-            }
+            when (cancelClick) {
 
-            bufferNum.setLength(0)
-            paramsFragment.mainTV.text = backSteck.lastElement()
+            //first cancel click
+                0 -> {
+
+                    cancelClick = 1
+
+                    currentParamVal = exp.varList[i]!!.value
+                    currentParamTitle = exp.varList[i]!!.title
+
+                    currentExp = backSteck.lastElement()
+
+                    isPoint = false
+                    bufferNum.setLength(0)
+                    changeMainTVContent()
+                    showHint()
+
+                }
+
+            //next cancel click
+                1 -> {
+                    if (i > 0) {
+
+                        i--
+                        currentParamVal = exp.varList[i]!!.value
+                        currentParamTitle = exp.varList[i]!!.title
+                        backSteck.pop()
+
+                        currentExp = backSteck.lastElement()
+                        baseExp = currentExp
+
+                        isPoint = false
+                        bufferNum.setLength(0)
+                        changeMainTVContent()
+                        showHint()
+
+                    }
+                }
+            }
         }
     }
 
@@ -103,6 +150,7 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
             baseExp = currentExp
             nextParam()
             showHint()
+            changeMainTVContent()
 
         } else {
             Toast.makeText(paramsFragment.context, "результат", Toast.LENGTH_SHORT).show()
@@ -115,12 +163,13 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
         currentParamVal = exp.varList[i]!!.value
         currentParamTitle = exp.varList[i]!!.title
         bufferNum.setLength(0)
+        isPoint = false
     }
 
     private fun showHint() {
 
         paramsFragment.hintTV.text = "Введите $currentParamVal"
-        paramsFragment.mainTV.text = currentExp
+
     }
 
     private fun changeMainTVContent() {

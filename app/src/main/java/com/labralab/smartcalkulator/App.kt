@@ -2,10 +2,7 @@ package com.labralab.smartcalkulator
 
 import android.app.Application
 import android.content.Context
-import com.labralab.smartcalkulator.dependencyInjection.AppComponents
-import com.labralab.smartcalkulator.dependencyInjection.AppModule
-import com.labralab.smartcalkulator.dependencyInjection.DaggerAppComponents
-import com.labralab.smartcalkulator.dependencyInjection.PresentersModule
+import com.labralab.smartcalkulator.dependencyInjection.*
 import io.realm.Realm
 
 /**
@@ -15,8 +12,21 @@ class App : Application() {
 
     lateinit var context: Context
 
+
     companion object {
         lateinit var appComponents: AppComponents
+        var presenterComponents: PresenterComponents? = null
+
+        fun plusPresenters(): PresenterComponents {
+
+            presenterComponents?.let {
+                return presenterComponents!!
+            } ?: run {
+                presenterComponents = appComponents.plusPresentepComponents(PresentersModule())
+                return presenterComponents!!
+            }
+            return presenterComponents!!
+        }
     }
 
     override fun onCreate() {
@@ -27,10 +37,11 @@ class App : Application() {
         Realm.init(context)
     }
 
-    private fun buildComponents(): AppComponents{
+    private fun buildComponents(): AppComponents {
         return DaggerAppComponents.builder()
                 .appModule(AppModule())
-                .presentersModule(PresentersModule())
                 .build()
     }
+
+
 }

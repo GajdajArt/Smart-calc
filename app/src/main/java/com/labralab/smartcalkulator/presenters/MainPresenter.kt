@@ -16,38 +16,45 @@ import javax.inject.Inject
  */
 class MainPresenter {
 
+    private var isMainActivityRunning = false
     private lateinit var mainActivity: MainActivity
     lateinit var supportFragmentManager: FragmentManager
 
     @Inject
     lateinit var expressionListFragment: ExpressionListFragment
-
-    private lateinit var expressionFragment: ExpressionFragment
-    private lateinit var parametersFragment: ParametersFragment
+    @Inject
+    lateinit var expressionFragment: ExpressionFragment
+    @Inject
+    lateinit var parametersFragment: ParametersFragment
 
     init {
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
     }
 
-    fun setMainActivity(mainActivity: MainActivity){
+    fun setMainActivity(mainActivity: MainActivity) {
         this.mainActivity = mainActivity
         supportFragmentManager = mainActivity.supportFragmentManager
     }
 
     //Run ExpressionListFragment()
-    fun runExpListFragment(){
+    fun runExpListFragment() {
 
-        val tr = supportFragmentManager.beginTransaction()
-        tr.replace(R.id.dayContainer, expressionListFragment)
-                .commit()
+        if (!isMainActivityRunning) {
+
+            val tr = supportFragmentManager.beginTransaction()
+            tr.replace(R.id.dayContainer, expressionListFragment)
+                    .commit()
+
+            isMainActivityRunning = true
+        }else{
+        }
     }
 
     //Run ExpFragment()
-    fun runExpFragment(bundle: Bundle?){
+    fun runExpFragment(bundle: Bundle?) {
 
-        expressionFragment = ExpressionFragment()
 
-        if(bundle !=  null){
+        if (bundle != null) {
             expressionFragment.arguments = bundle
         }
 
@@ -59,9 +66,8 @@ class MainPresenter {
     }
 
     //Run ParamsFragment()
-    fun runParamsFragment(bundle: Bundle){
+    fun runParamsFragment(bundle: Bundle) {
 
-        parametersFragment = ParametersFragment()
         parametersFragment.arguments = bundle
 
         val tr = supportFragmentManager.beginTransaction()

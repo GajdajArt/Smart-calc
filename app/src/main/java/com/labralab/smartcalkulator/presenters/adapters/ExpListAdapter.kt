@@ -34,7 +34,7 @@ class ExpListAdapter(var context: Context) : RecyclerView.Adapter<ExpRecyclerVie
 
     init {
 
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
         items = repository.getExpList()
 
     }
@@ -45,7 +45,6 @@ class ExpListAdapter(var context: Context) : RecyclerView.Adapter<ExpRecyclerVie
     }
 
     override fun onBindViewHolder(holder: ExpRecyclerViewHolder, position: Int) {
-
 
 
         var item = items[position]
@@ -115,7 +114,7 @@ class ExpRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
     init {
 
         //Injecting
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
 
         itemView.setOnClickListener(this)
 

@@ -30,20 +30,4 @@ class AppModule{
         return Realm.getDefaultInstance()
     }
 
-    //Fragments
-    @Provides
-    fun provideExpFragment(): ExpressionFragment {
-        return ExpressionFragment()
-    }
-
-    @Provides
-    fun provideExpListFragment(): ExpressionListFragment {
-        return ExpressionListFragment()
-    }
-
-    @Provides
-    fun provideParamsFragment(): ParametersFragment{
-        return ParametersFragment()
-    }
-
 }

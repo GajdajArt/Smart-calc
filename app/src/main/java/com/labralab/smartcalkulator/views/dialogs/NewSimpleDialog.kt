@@ -22,6 +22,7 @@ class NewSimpleDialog(var flag: Int, var expPresenter: ExpPresenter?) : DialogFr
 
     @Inject
     lateinit var mainPresenter: MainPresenter
+
     @Inject
     lateinit var repository: Repository
 
@@ -32,7 +33,7 @@ class NewSimpleDialog(var flag: Int, var expPresenter: ExpPresenter?) : DialogFr
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
 
         val builder = AlertDialog.Builder(activity)
 

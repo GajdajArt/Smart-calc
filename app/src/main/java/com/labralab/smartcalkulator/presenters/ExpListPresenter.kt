@@ -18,13 +18,14 @@ import javax.inject.Inject
  */
 class ExpListPresenter {
 
+
     lateinit var adapter: ExpListAdapter
 
     @Inject
     lateinit var mainPresenter: MainPresenter
 
     init {
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
     }
 
     fun runList(context: Context, mainRecyclerView: RecyclerView){
@@ -45,6 +46,4 @@ class ExpListPresenter {
         newDialog.show(mainPresenter.supportFragmentManager, "TAG")
 
     }
-
-
 }

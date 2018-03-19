@@ -29,6 +29,7 @@ class ExpressionFragment : Fragment() {
     lateinit var varSp: Spinner
     lateinit var expTitleTV: TextView
 
+    @Inject
     lateinit var expPresenter: ExpPresenter
     @Inject
     lateinit var repository: Repository
@@ -38,7 +39,7 @@ class ExpressionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         //Injecting
-        App.appComponents.inject(this)
+        App.presenterComponents!!.inject(this)
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_expression, container, false)
 
@@ -46,8 +47,6 @@ class ExpressionFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        expPresenter = ExpPresenter(this)
 
         varSp = varSpinner
         //Setting base items to spinner
