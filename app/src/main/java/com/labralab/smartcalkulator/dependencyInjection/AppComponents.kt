@@ -17,8 +17,6 @@ import javax.inject.Singleton
 @Component(modules = [(AppModule::class)])
 interface AppComponents {
 
-    fun plusPresentepComponents(presentersModule: PresentersModule): PresenterComponents
-
-
+    fun plusPresenterComponents(presentersModule: PresentersModule): PresenterComponents
 
 }

@@ -2,6 +2,7 @@ package com.labralab.calk.views.fragments
 
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,26 +17,27 @@ import kotlinx.android.synthetic.main.fragment_parameters.*
 import javax.inject.Inject
 
 
-/**
- * A simple [Fragment] subclass.
- */
-class ParametersFragment : Fragment() {
 
+class ParametersFragment : Fragment() {
 
 
     lateinit var hintTV: TextView
     lateinit var mainTV: TextView
+    lateinit var fab: FloatingActionButton
 
-    @Inject
-    lateinit var paramsPresenter: ParamsPresenter
 
     @Inject
     lateinit var repository: Repository
+    @Inject
+    lateinit var paramsPresenter: ParamsPresenter
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+
         App.presenterComponents!!.inject(this)
+        paramsPresenter.paramsFragment = this
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_parameters, container, false)
     }
@@ -43,8 +45,10 @@ class ParametersFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        hintTV = expTitleInPF
-        mainTV = distInPF
+        setViews()
+
+        paramsPresenter.showHint()
+        paramsPresenter.changeMainTVContent()
 
         buttonOnClick(oneButton, ParamsPresenter.ONE)
         buttonOnClick(twoButton, ParamsPresenter.TWO)
@@ -57,15 +61,15 @@ class ParametersFragment : Fragment() {
         buttonOnClick(nineButton, ParamsPresenter.NINE)
         buttonOnClick(zeroButton, ParamsPresenter.ZERO)
 
-        nextVarButton.setOnClickListener{
+        nextVarButton.setOnClickListener {
             paramsPresenter.nextOrDone()
         }
 
-        pointButton.setOnClickListener{
+        pointButton.setOnClickListener {
             paramsPresenter.insertPoint()
         }
 
-        cancelButton.setOnClickListener{
+        cancelButton.setOnClickListener {
             paramsPresenter.cancel()
         }
 
@@ -75,5 +79,12 @@ class ParametersFragment : Fragment() {
         button.setOnClickListener {
             paramsPresenter.setNumber(flag)
         }
+    }
+
+    fun setViews() {
+
+        hintTV = expTitleInPF
+        mainTV = distInPF
+        fab = nextVarButton
     }
 }

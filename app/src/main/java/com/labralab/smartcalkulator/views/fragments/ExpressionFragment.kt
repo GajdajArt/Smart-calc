@@ -25,7 +25,7 @@ import io.realm.Realm
 
 class ExpressionFragment : Fragment() {
 
-    lateinit var dispET: EditText
+    lateinit var dispET: TextView
     lateinit var varSp: Spinner
     lateinit var expTitleTV: TextView
 
@@ -40,6 +40,7 @@ class ExpressionFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         //Injecting
         App.presenterComponents!!.inject(this)
+        expPresenter.expFrag = this
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_expression, container, false)
 
@@ -73,6 +74,10 @@ class ExpressionFragment : Fragment() {
         buttonOnClick(rootButton, ExpPresenter.ROOT) //Root Button
         buttonOnClick(degreeButton, ExpPresenter.DEGREE) //Degree Button
 
+        deleteButton.setOnClickListener {
+            expPresenter.deleteVariable()
+        }
+
         pasteButton.setOnClickListener {
             expPresenter.pasteVar()
         }
@@ -80,6 +85,10 @@ class ExpressionFragment : Fragment() {
         //Ok Button
         doneButton.setOnClickListener {
             expPresenter.done()
+        }
+
+        backspaceButton.setOnClickListener {
+            expPresenter.backspaceClick()
         }
 
     }

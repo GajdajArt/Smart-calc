@@ -48,6 +48,7 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
     //Adding function
     fun addFunction(func: String) {
 
+
         if (!waitVar) {
 
             if (func == COS || func == SIN || func == TAN) {
@@ -55,30 +56,40 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
                 dispText.append(func)
                 dispText.append("(")
                 dispText.append(" ")
-                bracketCounter++
-
-            } else if (func == OPEN) {
-
-                dispText.append("(")
-                dispText.append(" ")
+                waitVar = true
                 bracketCounter++
 
             } else if (func == CLOSE) {
 
-                dispText.append(")")
-                dispText.append(" ")
-                bracketCounter--
+                if (bracketCounter > 0) {
 
-            } else {
+                    dispText.append(")")
+                    dispText.append(" ")
+                    bracketCounter--
+                }
+
+            } else if (func != OPEN) {
+
                 dispText.append(func)
                 dispText.append(" ")
+                waitVar = true
 
             }
-            expFrag.dispET.setText(dispText.toString())
-            waitVar = true
+            expFrag.dispET.text = dispText.toString()
+
 
         } else {
-            Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
+
+            if (func == OPEN) {
+
+                dispText.append("(")
+                dispText.append(" ")
+                bracketCounter++
+                expFrag.dispET.text = dispText.toString()
+
+            } else {
+                Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -90,14 +101,14 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
 
                 dispText.append(expFrag.varSp.selectedItem)
                 dispText.append(" ")
-                expFrag.dispET.setText(dispText.toString())
+                expFrag.dispET.text = dispText.toString()
                 waitVar = false
             }
             waitVar -> {
 
                 dispText.append(expFrag.varSp.selectedItem)
                 dispText.append(" ")
-                expFrag.dispET.setText(dispText.toString())
+                expFrag.dispET.text = dispText.toString()
                 waitVar = false
 
             }
@@ -112,6 +123,35 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
         forSpinnerList.add(0, variable.value)
         removeEmptyItem()
         expFrag.varSp.setSelection(0)
+
+    }
+
+    fun deleteVariable() {
+
+        var title = expFrag.varSp.selectedItem
+
+
+        if (forSpinnerList.size == 3) {
+
+            var item = expFrag.context.getString(R.string.empty)
+            forSpinnerList.add(0, item)
+
+            adapterOne = ArrayAdapter(expFrag.context,
+                    android.R.layout.simple_spinner_item, forSpinnerList)
+            adapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            expFrag.varSp.adapter = adapterOne
+
+            expFrag.varSp.setSelection(0)
+        }
+
+        forSpinnerList.remove(title)
+
+        for (v in varList) {
+            if (v.title == title) {
+                varList.remove(v)
+            }
+        }
+
 
     }
 
@@ -148,11 +188,13 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
     }
 
     private fun removeEmptyItem() {
+
         forSpinnerList.remove(expFrag.context.getString(R.string.empty))
     }
 
 
     fun createBaseItems() {
+
         if (forSpinnerList.size == 0) {
 
             var newVar = expFrag.context.getString(R.string.addVar)
@@ -203,6 +245,35 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
 
         } else {
             Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    //Removing elements from expression
+    fun backspaceClick() {
+
+
+        var i = dispText.length - 1
+
+        if (i >= 0) {
+
+            var c: Char
+
+            do {
+
+                dispText.deleteCharAt(i)
+
+                if (i > 0) {
+
+                    i--
+                    c = dispText[i]
+
+                } else {
+                    break
+                }
+
+            } while (c != ' ')
+
+            expFrag.dispET.text = dispText.toString()
         }
     }
 }

@@ -22,10 +22,14 @@ class App : Application() {
             presenterComponents?.let {
                 return presenterComponents!!
             } ?: run {
-                presenterComponents = appComponents.plusPresentepComponents(PresentersModule())
+                presenterComponents = appComponents.plusPresenterComponents(PresentersModule())
                 return presenterComponents!!
             }
             return presenterComponents!!
+        }
+
+        fun removePresenterComponents(){
+            presenterComponents = null
         }
     }
 

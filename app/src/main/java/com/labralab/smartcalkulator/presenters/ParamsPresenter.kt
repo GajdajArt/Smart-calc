@@ -1,50 +1,43 @@
 package com.labralab.smartcalkulator.presenters
 
-import android.widget.Toast
 import com.labralab.calk.views.fragments.ParametersFragment
+import com.labralab.smartcalkulator.R
+import com.labralab.smartcalkulator.calkulator.SmartCalculator
 import com.labralab.smartcalkulator.models.Expression
+import kotlinx.android.synthetic.main.fragment_expression_list.*
 import java.util.*
 
 /**
  * Created by pc on 09.03.2018.
  */
-class ParamsPresenter(private val paramsFragment: ParametersFragment) {
+class ParamsPresenter(var paramsFragment: ParametersFragment) {
+
 
     private var bufferNum: StringBuilder = StringBuilder()
-    private var baseExp: String
 
     private var i = 0
-    private var currentParamVal: String
-    private var currentParamTitle: String
-    private var currentExp: String
-
-    private var title: String
-    private var exp: Expression
-
-    private var isPoint = false
-
-    private var backSteck: Stack<String>
-
     private var cancelClick = 0
+    private var isPoint = false
     private var firstNumAfterPoint = false
+    private var isDone = false
+
+    private lateinit var baseExp: String
+
+    private lateinit var currentParamVal: String
+    private lateinit var currentParamTitle: String
+    private lateinit var currentExp: String
+
+    private lateinit var title: String
+    private lateinit var exp: Expression
+
+
+
+    private lateinit var backStack: Stack<String>
+
 
     init {
 
-        title = paramsFragment.arguments.getString("title")
-
-        exp = paramsFragment.repository.getExp(title)
-
-        currentParamVal = exp.varList[i]!!.value
-        currentParamTitle = exp.varList[i]!!.title
-        currentExp = exp.exp
-
-        baseExp = exp.exp
-
-        backSteck = Stack()
-        backSteck.push(baseExp)
-
-        showHint()
-        changeMainTVContent()
+        initThis()
 
     }
 
@@ -63,15 +56,39 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
 
     }
 
+    private fun initThis(){
+
+        bufferNum = StringBuilder()
+
+        i = 0
+        cancelClick = 0
+        isPoint = false
+        firstNumAfterPoint = false
+        isDone = false
+
+        title = paramsFragment.arguments.getString("title")
+
+        exp = paramsFragment.repository.getExp(title)
+
+        currentParamVal = exp.varList[i]!!.value
+        currentParamTitle = exp.varList[i]!!.title
+        currentExp = exp.exp
+
+        baseExp = exp.exp
+
+        backStack = Stack()
+        backStack.push(baseExp)
+    }
+
     fun setNumber(flag: Int) {
 
-        if(firstNumAfterPoint){
+        if (firstNumAfterPoint) {
 
             bufferNum.delete(bufferNum.length - 1, bufferNum.length)
             bufferNum.append(flag)
             firstNumAfterPoint = false
 
-        }else{
+        } else {
 
             bufferNum.append(flag)
 
@@ -98,7 +115,7 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
 
     fun cancel() {
 
-        if (backSteck.size > 0) {
+        if (backStack.size > 0) {
 
             when (cancelClick) {
 
@@ -110,7 +127,7 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
                     currentParamVal = exp.varList[i]!!.value
                     currentParamTitle = exp.varList[i]!!.title
 
-                    currentExp = backSteck.lastElement()
+                    currentExp = backStack.lastElement()
 
                     isPoint = false
                     bufferNum.setLength(0)
@@ -126,9 +143,9 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
                         i--
                         currentParamVal = exp.varList[i]!!.value
                         currentParamTitle = exp.varList[i]!!.title
-                        backSteck.pop()
+                        backStack.pop()
 
-                        currentExp = backSteck.lastElement()
+                        currentExp = backStack.lastElement()
                         baseExp = currentExp
 
                         isPoint = false
@@ -144,18 +161,36 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
 
     fun nextOrDone() {
 
-        if (i < exp.varList.size - 1) {
+        if (!isDone) {
 
-            backSteck.push(currentExp)
-            baseExp = currentExp
-            nextParam()
+            if (i < exp.varList.size - 1) {
+
+                backStack.push(currentExp)
+                baseExp = currentExp
+                nextParam()
+                showHint()
+                changeMainTVContent()
+
+
+            } else {
+
+                paramsFragment.mainTV.text = SmartCalculator.calculate(currentExp, 0).toString()
+                paramsFragment.fab.setImageResource(R.drawable.ic_replay_white_24dp)
+                isDone = true
+
+            }
+
+        }else{
+
+            initThis()
+            paramsFragment.fab.setImageResource(R.drawable.ic_action_play_arrow)
             showHint()
             changeMainTVContent()
 
-        } else {
-            Toast.makeText(paramsFragment.context, "результат", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
     private fun nextParam() {
 
@@ -166,13 +201,13 @@ class ParamsPresenter(private val paramsFragment: ParametersFragment) {
         isPoint = false
     }
 
-    private fun showHint() {
+    fun showHint() {
 
         paramsFragment.hintTV.text = "Введите $currentParamVal"
 
     }
 
-    private fun changeMainTVContent() {
+    fun changeMainTVContent() {
 
         paramsFragment.mainTV.text = currentExp
     }

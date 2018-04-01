@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import com.labralab.calk.repository.Repository
 import com.labralab.smartcalkulator.App
 
@@ -45,5 +46,19 @@ class ExpListPresenter {
         val newDialog = NewSimpleDialog(NewSimpleDialog.NEW_EXP_FLAG, null)
         newDialog.show(mainPresenter.supportFragmentManager, "TAG")
 
+    }
+
+    fun showHint(context: Context){
+
+        if(adapter.itemCount == 0){
+
+            Toast.makeText(context, "Нажмите на \"+\" чтоб добавить формулу", Toast.LENGTH_SHORT)
+                    .show()
+        } else{
+
+            Toast.makeText(context, "Нажмите на эллемент " +
+                    "списка чтоб перейти к введению параметров", Toast.LENGTH_SHORT)
+                    .show()
+        }
     }
 }

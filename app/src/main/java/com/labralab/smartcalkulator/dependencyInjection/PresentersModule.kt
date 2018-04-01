@@ -21,21 +21,18 @@ class PresentersModule {
 
     //Fragments
     @Provides
-    @ActivitySingleton
     fun provideExpFragment(): ExpressionFragment {
         expressionFragment = ExpressionFragment()
         return expressionFragment
     }
 
     @Provides
-    @ActivitySingleton
     fun provideExpListFragment(): ExpressionListFragment {
         expressionListFragment = ExpressionListFragment()
         return expressionListFragment
     }
 
     @Provides
-    @ActivitySingleton
     fun provideParamsFragment(): ParametersFragment{
         parametersFragment = ParametersFragment()
         return parametersFragment

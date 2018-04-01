@@ -19,53 +19,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
-                android:background="@android:color/holo_blue_light"
+                android:background="@color/displayBackground"
                 android:gravity="right"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/expTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/displayBackground"
+                    android:textSize="20sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/displayET"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="top|left"
-                    android:inputType="none"
-                    android:lines="5"
-                    android:textIsSelectable="true" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@color/displayBackground"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
+
                 android:id="@+id/viewTwo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:background="@android:color/holo_orange_light"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp">
 
                 <Spinner
                     android:id="@+id/varSpinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content">
 
                 </Spinner>
 
                 <Button
                     android:id="@+id/pasteButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
+                    android:layout_width="65dp"
                     android:text="paste" />
 
+                <ImageButton
+                    android:id="@+id/deleteButton"
+                    style="@style/buttonStile"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_action_delete_forever_o" />
 
                 <ImageButton
-                    android:id="@+id/backSpaceButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_input_delete" />
+                    android:id="@+id/backspaceButton"
+                    style="@style/buttonStile"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_action_backspace" />
 
             </LinearLayout>
 
@@ -78,7 +90,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
 
-                android:padding="4dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
 
 
                 grid:alignmentMode="alignBounds"
@@ -89,83 +104,83 @@
                 <Button
 
                     android:id="@+id/sinButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="sin"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/cosButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="cos"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/tanButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="tan"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/openButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="("
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/closeButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text=")"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/piButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="Pi"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/plusButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="+"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/minusButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="-"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/multiplyButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="*"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/divideButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="/"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/rootButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     app:layout_columnWeight="1" />
 
                 <Button
 
                     android:id="@+id/degreeButton"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStile"
                     android:text="X2"
                     app:layout_columnWeight="1" />
 
@@ -179,8 +194,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_edit"
-            app:backgroundTint="#FF0000"
+            android:src="@drawable/ic_done_white_24dp"
+            app:backgroundTint="@color/colorAccent"
             app:layout_anchor="@id/viewOne"
             app:layout_anchorGravity="bottom|right|end"
             app:rippleColor="#FFF" />

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.labralab.calk.repository.Repository
 import com.labralab.smartcalkulator.App
 
@@ -128,9 +129,19 @@ class ExpRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
     override fun onClick(view: View) {
 
-        val bundle = Bundle()
-        bundle.putString("title", title.text.toString())
-        mainPresenter.runParamsFragment(bundle)
+        val context = view.context
+
+        if (!formula.text.isEmpty()) {
+
+            val bundle = Bundle()
+            bundle.putString("title", title.text.toString())
+            mainPresenter.runParamsFragment(bundle)
+
+        } else {
+
+            Toast.makeText(context, "Нажмите на \"изменить\" чтоб добавить формулу", Toast.LENGTH_SHORT)
+                    .show()
+        }
 
     }
 }
