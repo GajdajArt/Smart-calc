@@ -53,6 +53,11 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp">
+                <ImageButton
+                    android:id="@+id/deleteButton"
+                    style="@style/buttonStile"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_action_delete_forever_o" />
 
                 <Spinner
                     android:id="@+id/varSpinner"
@@ -65,18 +70,15 @@
                     android:id="@+id/pasteButton"
                     style="@style/buttonStile"
                     android:layout_width="65dp"
-                    android:text="paste" />
+                    android:text="paste"
+                    android:textSize="15sp"/>
 
-                <ImageButton
-                    android:id="@+id/deleteButton"
-                    style="@style/buttonStile"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_action_delete_forever_o" />
+
 
                 <ImageButton
                     android:id="@+id/backspaceButton"
                     style="@style/buttonStile"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="12dp"
                     android:src="@drawable/ic_action_backspace" />
 
             </LinearLayout>
@@ -110,10 +112,42 @@
 
                 <Button
 
+                    android:id="@+id/plusButton"
+                    style="@style/buttonStile"
+                    android:text="+"
+                    app:layout_columnWeight="1" />
+                <Button
+
+                    android:id="@+id/minusButton"
+                    style="@style/buttonStile"
+                    android:text="-"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
                     android:id="@+id/cosButton"
                     style="@style/buttonStile"
                     android:text="cos"
                     app:layout_columnWeight="1" />
+
+
+
+
+                <Button
+
+                    android:id="@+id/multiplyButton"
+                    style="@style/buttonStile"
+                    android:text="*"
+                    app:layout_columnWeight="1" />
+
+                <Button
+
+                    android:id="@+id/divideButton"
+                    style="@style/buttonStile"
+                    android:text="/"
+                    app:layout_columnWeight="1" />
+
+
 
                 <Button
 
@@ -143,33 +177,7 @@
                     android:text="Pi"
                     app:layout_columnWeight="1" />
 
-                <Button
 
-                    android:id="@+id/plusButton"
-                    style="@style/buttonStile"
-                    android:text="+"
-                    app:layout_columnWeight="1" />
-
-                <Button
-
-                    android:id="@+id/minusButton"
-                    style="@style/buttonStile"
-                    android:text="-"
-                    app:layout_columnWeight="1" />
-
-                <Button
-
-                    android:id="@+id/multiplyButton"
-                    style="@style/buttonStile"
-                    android:text="*"
-                    app:layout_columnWeight="1" />
-
-                <Button
-
-                    android:id="@+id/divideButton"
-                    style="@style/buttonStile"
-                    android:text="/"
-                    app:layout_columnWeight="1" />
 
                 <Button
 

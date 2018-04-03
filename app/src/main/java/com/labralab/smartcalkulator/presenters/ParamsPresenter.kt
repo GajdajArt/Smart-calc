@@ -20,6 +20,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
     private var isPoint = false
     private var firstNumAfterPoint = false
     private var isDone = false
+    private var isNull = false
 
     private lateinit var baseExp: String
 
@@ -29,7 +30,6 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     private lateinit var title: String
     private lateinit var exp: Expression
-
 
 
     private lateinit var backStack: Stack<String>
@@ -56,7 +56,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     }
 
-    private fun initThis(){
+    private fun initThis() {
 
         bufferNum = StringBuilder()
 
@@ -84,14 +84,31 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
         if (firstNumAfterPoint) {
 
-            bufferNum.delete(bufferNum.length - 1, bufferNum.length)
+            if (flag != 0) {
+                bufferNum.delete(bufferNum.length - 1, bufferNum.length)
+            }
+
             bufferNum.append(flag)
             firstNumAfterPoint = false
 
         } else {
 
-            bufferNum.append(flag)
+            if (flag == 0) {
 
+                if (!isNull && !isPoint) {
+
+                    bufferNum.append(flag)
+                    isNull = true
+                }
+
+                if (isPoint) {
+
+                    bufferNum.append(flag)
+                }
+
+            } else {
+                bufferNum.append(flag)
+            }
         }
         currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
         changeMainTVContent()
@@ -106,6 +123,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
             bufferNum.append(".0")
             currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
             isPoint = true
+            isNull = false
             showHint()
             changeMainTVContent()
             cancelClick = 0
@@ -130,6 +148,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
                     currentExp = backStack.lastElement()
 
                     isPoint = false
+                    isNull = false
                     bufferNum.setLength(0)
                     changeMainTVContent()
                     showHint()
@@ -149,6 +168,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
                         baseExp = currentExp
 
                         isPoint = false
+                        isNull = false
                         bufferNum.setLength(0)
                         changeMainTVContent()
                         showHint()
@@ -180,7 +200,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
             }
 
-        }else{
+        } else {
 
             initThis()
             paramsFragment.fab.setImageResource(R.drawable.ic_action_play_arrow)
@@ -191,7 +211,6 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
     }
 
 
-
     private fun nextParam() {
 
         i++
@@ -199,6 +218,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
         currentParamTitle = exp.varList[i]!!.title
         bufferNum.setLength(0)
         isPoint = false
+        isNull = false
     }
 
     fun showHint() {
