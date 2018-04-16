@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import com.labralab.calk.repository.Repository
 import com.labralab.smartcalkulator.App
@@ -24,6 +25,7 @@ class ParametersFragment : Fragment() {
     lateinit var hintTV: TextView
     lateinit var mainTV: TextView
     lateinit var fab: FloatingActionButton
+    lateinit var resSP: Spinner
 
 
     @Inject
@@ -47,6 +49,7 @@ class ParametersFragment : Fragment() {
 
         setViews()
 
+        paramsPresenter.getResultList()
         paramsPresenter.showHint()
         paramsPresenter.changeMainTVContent()
 
@@ -73,6 +76,18 @@ class ParametersFragment : Fragment() {
             paramsPresenter.cancel()
         }
 
+        saveResultButton.setOnClickListener {
+            paramsPresenter.saveResult()
+        }
+
+        delResultButton.setOnClickListener {
+            paramsPresenter.removeResult()
+        }
+
+        pasteResultButton.setOnClickListener {
+            paramsPresenter.pasteResult()
+        }
+
     }
 
     private fun buttonOnClick(button: Button, flag: Int) {
@@ -81,10 +96,11 @@ class ParametersFragment : Fragment() {
         }
     }
 
-    fun setViews() {
+    private fun setViews() {
 
         hintTV = expTitleInPF
         mainTV = distInPF
         fab = nextVarButton
+        resSP = resultSP
     }
 }

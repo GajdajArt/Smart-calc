@@ -21,7 +21,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
                 android:background="@color/displayBackground"
-                android:gravity="right"
+                android:paddingBottom="50dp"
+                android:paddingRight="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -29,18 +30,17 @@
                     android:id="@+id/expTitleInPF"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
                     android:background="@color/displayBackground"
+                    android:layout_gravity="top|right"
+                    android:layout_marginBottom="100dp"
                     android:textSize="20sp" />
 
                 <TextView
 
                     android:id="@+id/distInPF"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="40dp"
                     android:background="@color/displayBackground"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -62,6 +62,7 @@
                     android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_action_save" />
 
+
                 <Spinner
                     android:id="@+id/resultSP"
                     android:layout_width="70dp"
@@ -69,11 +70,18 @@
 
                 </Spinner>
 
+                <ImageButton
+                    android:id="@+id/delResultButton"
+                    style="@style/buttonStile"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_action_delete_forever_o" />
+
                 <Button
                     android:id="@+id/pasteResultButton"
                     style="@style/buttonStile"
                     android:layout_width="65dp"
                     android:text="paste"
+                    android:layout_marginLeft="5dp"
                     android:textSize="12sp" />
 
 

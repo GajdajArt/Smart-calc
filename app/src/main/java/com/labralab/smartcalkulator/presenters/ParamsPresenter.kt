@@ -1,11 +1,16 @@
 package com.labralab.smartcalkulator.presenters
 
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.labralab.calk.views.fragments.ParametersFragment
 import com.labralab.smartcalkulator.R
 import com.labralab.smartcalkulator.calkulator.SmartCalculator
 import com.labralab.smartcalkulator.models.Expression
+import com.labralab.smartcalkulator.models.Result
+import com.labralab.smartcalkulator.utils.TextViewUtil
 import kotlinx.android.synthetic.main.fragment_expression_list.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by pc on 09.03.2018.
@@ -21,6 +26,9 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
     private var firstNumAfterPoint = false
     private var isDone = false
     private var isNull = false
+
+    private lateinit var adapterOne: ArrayAdapter<Double>
+    private lateinit var resultList: ArrayList<Result>
 
     private lateinit var baseExp: String
 
@@ -230,5 +238,57 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
     fun changeMainTVContent() {
 
         paramsFragment.mainTV.text = currentExp
+        paramsFragment.mainTV.textSize = TextViewUtil.getTextSize(paramsFragment.mainTV)
+
+    }
+
+    fun saveResult() {
+
+        if (isDone) {
+
+            val result = Result()
+            result.res = java.lang.Double.parseDouble(paramsFragment.mainTV.text as String?)
+            paramsFragment.repository.createResult(result)
+            getResultList()
+            paramsFragment.resSP.setSelection(resultList.size - 1)
+
+        } else {
+
+            Toast.makeText(paramsFragment.context, "Результат еще не доступен", Toast.LENGTH_SHORT)
+                    .show()
+
+        }
+    }
+
+    fun getResultList() {
+
+        resultList = paramsFragment.repository.getResultList()
+        val valOfResult = ArrayList<Double>()
+
+        for (r in resultList) {
+            valOfResult.add(r.res)
+        }
+
+        adapterOne = ArrayAdapter(paramsFragment.context,
+                android.R.layout.simple_spinner_item, valOfResult)
+        adapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        paramsFragment.resSP.adapter = adapterOne
+    }
+
+    fun removeResult() {
+
+        if (!resultList.isEmpty()) {
+            paramsFragment.repository.removeResult(paramsFragment.resSP.selectedItem as Double)
+            getResultList()
+        }
+
+    }
+
+    fun pasteResult() {
+
+        bufferNum.append(paramsFragment.resSP.selectedItem)
+        currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
+        changeMainTVContent()
+        cancelClick = 0
     }
 }
