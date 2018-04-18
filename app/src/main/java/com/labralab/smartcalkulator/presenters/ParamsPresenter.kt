@@ -22,6 +22,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     private var i = 0
     private var cancelClick = 0
+    private var r = 0.0
     private var isPoint = false
     private var firstNumAfterPoint = false
     private var isDone = false
@@ -38,7 +39,6 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     private lateinit var title: String
     private lateinit var exp: Expression
-
 
     private lateinit var backStack: Stack<String>
 
@@ -68,6 +68,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
         bufferNum = StringBuilder()
 
+        r = 0.0
         i = 0
         cancelClick = 0
         isPoint = false
@@ -191,7 +192,16 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
         if (!isDone) {
 
+            if (bufferNum.isEmpty()) {
+
+                bufferNum.append("0")
+                currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
+                changeMainTVContent()
+
+            }
+
             if (i < exp.varList.size - 1) {
+
 
                 backStack.push(currentExp)
                 baseExp = currentExp
@@ -199,10 +209,17 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
                 showHint()
                 changeMainTVContent()
 
-
             } else {
 
-                paramsFragment.mainTV.text = SmartCalculator.calculate(currentExp, 0).toString()
+                val isRad = when (paramsFragment.dRButton.isChecked) {
+
+                    true -> 1
+                    false -> 0
+
+                }
+
+                r = SmartCalculator.calculate(currentExp, isRad)
+                paramsFragment.mainTV.text = r.toString()
                 paramsFragment.fab.setImageResource(R.drawable.ic_replay_white_24dp)
                 isDone = true
 
@@ -247,7 +264,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
         if (isDone) {
 
             val result = Result()
-            result.res = java.lang.Double.parseDouble(paramsFragment.mainTV.text as String?)
+            result.res = r
             paramsFragment.repository.createResult(result)
             getResultList()
             paramsFragment.resSP.setSelection(resultList.size - 1)
@@ -286,9 +303,23 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     fun pasteResult() {
 
-        bufferNum.append(paramsFragment.resSP.selectedItem)
-        currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
-        changeMainTVContent()
-        cancelClick = 0
+        if (!isDone) {
+
+            bufferNum.append(paramsFragment.resSP.selectedItem)
+            currentExp = baseExp.replace(currentParamVal, bufferNum.toString())
+            changeMainTVContent()
+            cancelClick = 0
+        }
+    }
+
+    fun changeNumAfterPoint(process: Int) {
+
+        if (isDone) {
+
+            //переопределяем выводимое число на дисплей
+            val numbers = String.format("%." + process + "f", r)
+            paramsFragment.mainTV.text = numbers
+            paramsFragment.mainTV.textSize = TextViewUtil.getTextSize(paramsFragment.mainTV)
+        }
     }
 }

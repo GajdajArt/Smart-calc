@@ -7,9 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import com.labralab.calk.repository.Repository
 import com.labralab.smartcalkulator.App
 import com.labralab.smartcalkulator.R
@@ -26,6 +24,7 @@ class ParametersFragment : Fragment() {
     lateinit var mainTV: TextView
     lateinit var fab: FloatingActionButton
     lateinit var resSP: Spinner
+    lateinit var dRButton: ToggleButton
 
 
     @Inject
@@ -63,6 +62,20 @@ class ParametersFragment : Fragment() {
         buttonOnClick(eytButton, ParamsPresenter.EYT)
         buttonOnClick(nineButton, ParamsPresenter.NINE)
         buttonOnClick(zeroButton, ParamsPresenter.ZERO)
+
+        numAfterPoint.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                paramsPresenter.changeNumAfterPoint(seekBar.progress)
+            }
+        })
 
         nextVarButton.setOnClickListener {
             paramsPresenter.nextOrDone()
@@ -102,5 +115,6 @@ class ParametersFragment : Fragment() {
         mainTV = distInPF
         fab = nextVarButton
         resSP = resultSP
+        dRButton = degOrRadButton
     }
 }
