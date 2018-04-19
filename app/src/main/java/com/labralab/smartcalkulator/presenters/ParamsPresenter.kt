@@ -282,6 +282,10 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
         resultList = paramsFragment.repository.getResultList()
         val valOfResult = ArrayList<Double>()
 
+        if(valOfResult.isEmpty()){
+            valOfResult.add(0.0)
+        }
+
         for (r in resultList) {
             valOfResult.add(r.res)
         }

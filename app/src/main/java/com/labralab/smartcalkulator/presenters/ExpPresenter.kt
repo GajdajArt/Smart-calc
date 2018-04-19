@@ -14,8 +14,9 @@ import com.labralab.smartcalkulator.views.dialogs.NewSimpleDialog
 
 class ExpPresenter(var expFrag: ExpressionFragment) {
 
-    lateinit var expTitle: String
-    lateinit var exp: Expression
+    private lateinit var expTitle: String
+    private lateinit var exp: Expression
+    private var paramsCounter = 0
 
     private var varList = ArrayList<Variable>()
     private var forSpinnerList = ArrayList<String>()
@@ -48,8 +49,11 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
     //Adding function
     fun addFunction(func: String) {
 
+        if (expFrag.dispET.text.isEmpty()) {
+            waitVar = true
+        }
 
-        if (!waitVar) {
+        if (waitVar) {
 
             if (func == COS || func == SIN || func == TAN) {
 
@@ -59,32 +63,36 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
                 waitVar = true
                 bracketCounter++
 
-            } else if (func == CLOSE) {
-
-                if (bracketCounter > 0) {
-
-                    dispText.append(")")
-                    dispText.append(" ")
-                    bracketCounter--
-                }
-
-            } else if (func != OPEN) {
-
-                dispText.append(func)
-                dispText.append(" ")
-                waitVar = true
-
             }
             expFrag.dispET.text = dispText.toString()
 
 
         } else {
 
-            if (func == OPEN) {
+            if (func == CLOSE) {
+
+                if (bracketCounter > 0) {
+
+                    dispText.append(")")
+                    dispText.append(" ")
+                    bracketCounter--
+                    expFrag.dispET.text = dispText.toString()
+
+                }
+
+            } else if (func != OPEN && func != COS && func != SIN && func != TAN) {
+
+                dispText.append(func)
+                dispText.append(" ")
+                waitVar = true
+                expFrag.dispET.text = dispText.toString()
+
+            }else if (func == OPEN) {
 
                 dispText.append("(")
                 dispText.append(" ")
                 bracketCounter++
+                waitVar = true
                 expFrag.dispET.text = dispText.toString()
 
             } else {
@@ -96,23 +104,34 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
 
     fun pasteVar() {
 
-        when {
-            expFrag.dispET.text.isEmpty() -> {
+        if (paramsCounter < 50) {
 
-                dispText.append(expFrag.varSp.selectedItem)
-                dispText.append(" ")
-                expFrag.dispET.text = dispText.toString()
-                waitVar = false
+            if (expFrag.varSp.selectedItem != expFrag.context.getString(R.string.empty)) {
+
+                when {
+                    expFrag.dispET.text.isEmpty() -> {
+
+                        dispText.append(expFrag.varSp.selectedItem)
+                        dispText.append(" ")
+                        expFrag.dispET.text = dispText.toString()
+                        waitVar = false
+                        paramsCounter++
+
+                    }
+                    waitVar -> {
+
+                        dispText.append(expFrag.varSp.selectedItem)
+                        dispText.append(" ")
+                        expFrag.dispET.text = dispText.toString()
+                        waitVar = false
+                        paramsCounter++
+
+                    }
+                    else -> Toast.makeText(expFrag.context, "Параметр уже вставлен", Toast.LENGTH_SHORT).show()
+                }
             }
-            waitVar -> {
-
-                dispText.append(expFrag.varSp.selectedItem)
-                dispText.append(" ")
-                expFrag.dispET.text = dispText.toString()
-                waitVar = false
-
-            }
-            else -> Toast.makeText(expFrag.context, "error", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(expFrag.context, "Слишком длинная формула", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -273,6 +292,7 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
 
             } while (c != ' ')
 
+            waitVar = !waitVar
             expFrag.dispET.text = dispText.toString()
         }
     }

@@ -91,11 +91,12 @@ class NewSimpleDialog(var flag: Int, var expPresenter: ExpPresenter?) : DialogFr
         builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
 
             when (flag) {
-                NEW_CONST_FLAG -> {
 
+                NEW_CONST_FLAG -> {
+                    expPresenter!!.expFrag.varSp.setSelection(0)
+                    dialog.cancel()
                 }
                 NEW_EXP_FLAG -> {
-                    expPresenter!!.expFrag.varSp.setSelection(0)
                     dialog.cancel()
                 }
             }
