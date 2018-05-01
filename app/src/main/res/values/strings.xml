@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Calkulator</string>
+    <string name="app_name">Smart Calculator</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="square_root_symbol">\u221a</string>
     <string name="action_settings">Settings</string>
@@ -9,5 +9,8 @@
     <string name="variable">Переменная</string>
     <string name="addVar">Добавить</string>
     <string name="constanta">Константа</string>
+    <string name="delete">Удалить</string>
     <string name="empty">-</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

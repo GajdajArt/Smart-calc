@@ -72,7 +72,7 @@ class ExpListAdapter(var context: Context) : RecyclerView.Adapter<ExpRecyclerVie
 
         val builder = AlertDialog.Builder(context)
         builder.setMessage("Удалить $title?")
-        builder.setPositiveButton("Да", { dialog, _ ->
+        builder.setPositiveButton(context.getString(R.string.yes), { dialog, _ ->
 
             repository.removeExp(title)
             items = repository.getExpList()
@@ -81,7 +81,7 @@ class ExpListAdapter(var context: Context) : RecyclerView.Adapter<ExpRecyclerVie
 
         })
 
-        builder.setNegativeButton("Нет", { dialog, _ ->
+        builder.setNegativeButton(context.getString(R.string.no), { dialog, _ ->
             dialog.cancel()
         })
 

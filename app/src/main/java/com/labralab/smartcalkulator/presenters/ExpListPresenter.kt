@@ -29,6 +29,7 @@ class ExpListPresenter {
         App.presenterComponents!!.inject(this)
     }
 
+    //Running RecyclerView
     fun runList(context: Context, mainRecyclerView: RecyclerView){
 
         val layoutManager = LinearLayoutManager(context)
@@ -41,6 +42,7 @@ class ExpListPresenter {
                 LinearLayoutManager.VERTICAL))
     }
 
+    //Running dialog for adding new expression
     fun addNewExpression(){
 
         val newDialog = NewSimpleDialog(NewSimpleDialog.NEW_EXP_FLAG, null)
@@ -48,6 +50,7 @@ class ExpListPresenter {
 
     }
 
+    //first hint
     fun showHint(context: Context){
 
         if(adapter.itemCount == 0){

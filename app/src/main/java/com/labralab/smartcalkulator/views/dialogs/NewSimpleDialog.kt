@@ -74,7 +74,7 @@ class NewSimpleDialog(var flag: Int, var expPresenter: ExpPresenter?) : DialogFr
                     //New Expression saving to Realm
                     var expression = Expression()
                     expression.title = etTitle.text.toString()
-                    repository.createDay(expression)
+                    repository.createExp(expression)
 
 
                     //Running ExpFragment()

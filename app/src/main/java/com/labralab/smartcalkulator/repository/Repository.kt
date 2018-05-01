@@ -8,11 +8,11 @@ import io.realm.RealmQuery
 import io.realm.RealmResults
 
 
-
 class Repository {
 
     private val realm = Realm.getDefaultInstance()!!
 
+    //Saving a result to Realm DB
     fun createResult(r: Result){
 
         realm.beginTransaction()
@@ -21,6 +21,7 @@ class Repository {
 
     }
 
+    //Getting a list of results from Realm DB
     fun getResultList(): ArrayList<Result>{
 
         val query: RealmQuery<Result> = realm.where(Result::class.java)
@@ -32,6 +33,7 @@ class Repository {
         return list
     }
 
+    //Removing a result from Realm DB
     fun removeResult(r: Double){
 
         var flag = false
@@ -52,13 +54,15 @@ class Repository {
 
     }
 
-    fun createDay (exp: Expression){
+    //Saving en expression to Realm DB
+    fun createExp (exp: Expression){
 
         realm.beginTransaction()
         realm.insert(exp)
         realm.commitTransaction()
     }
 
+    //Getting a list of expression from Realm DB
     fun getExpList(): ArrayList<Expression> {
 
         val query: RealmQuery<Expression> = realm.where(Expression::class.java)
@@ -70,6 +74,7 @@ class Repository {
         return list
     }
 
+    //Removing an expression from Realm DB
     fun removeExp(title: String){
 
         var flag = false
@@ -89,6 +94,7 @@ class Repository {
 
     }
 
+    //Getting a concrete expression
     fun getExp(title: String): Expression{
 
         var expression = Expression()

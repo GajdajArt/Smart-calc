@@ -102,6 +102,7 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
 
     }
 
+    //inserting a variable into the formula
     fun pasteVar() {
 
         if (paramsCounter < 50) {
@@ -145,6 +146,7 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
 
     }
 
+    //removing variable
     fun deleteVariable() {
 
         var title = expFrag.varSp.selectedItem
@@ -194,24 +196,28 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
         }
     }
 
+    //Running dialog for adding new variable
     fun showNewVarDialog() {
 
         val newVarDialog = NewVarDialog(this)
         newVarDialog.show(expFrag.fragmentManager, "TAG")
     }
 
+    //Running dialog for adding new constance
     fun showNewConstDialog() {
 
         val newConsDialog = NewSimpleDialog(NewSimpleDialog.NEW_CONST_FLAG, this)
         newConsDialog.show(expFrag.fragmentManager, "TAG")
     }
 
+    //Removing empty item when list of variable is not empty
     private fun removeEmptyItem() {
 
         forSpinnerList.remove(expFrag.context.getString(R.string.empty))
     }
 
 
+    //Creating base item when list of variable is empty
     fun createBaseItems() {
 
         if (forSpinnerList.size == 0) {
@@ -232,6 +238,7 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
         }
     }
 
+    //
     private fun choseBaseItem() {
 
         expFrag.varSp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -250,11 +257,11 @@ class ExpPresenter(var expFrag: ExpressionFragment) {
         }
     }
 
+    //Saving expression and varList to Realm Item
     fun done() {
 
         if (bracketCounter == 0) {
 
-            //Saving expression and varList to Realm Item
             expFrag.realm.executeTransaction {
                 exp.exp = dispText.toString()
                 exp.varList.addAll(varList)

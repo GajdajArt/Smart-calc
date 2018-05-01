@@ -9,6 +9,7 @@ class TextViewUtil {
 
     companion object {
 
+        //method for changing the size of the text depending on its number
         fun getTextSize(tv: TextView): Float {
 
             return when (tv.text.length) {

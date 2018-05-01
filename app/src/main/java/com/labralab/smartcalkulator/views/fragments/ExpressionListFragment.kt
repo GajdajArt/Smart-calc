@@ -35,6 +35,7 @@ class ExpressionListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        //Running view (list and hint)
         expListPresenter.runList(activity, mainRecyclerView)
         expListPresenter.showHint(context)
 
@@ -42,11 +43,4 @@ class ExpressionListFragment : Fragment() {
             expListPresenter.addNewExpression()
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
 }

@@ -21,6 +21,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import com.labralab.calk.repository.Repository
 import io.realm.Realm
+import kotlinx.android.synthetic.main.fragment_parameters.*
 
 
 class ExpressionFragment : Fragment() {
@@ -49,15 +50,10 @@ class ExpressionFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        varSp = varSpinner
-        //Setting base items to spinner
-        expPresenter.createBaseItems()
-        dispET = displayET
-        expTitleTV = expTitle
+        //Running view
+        setViews()
 
-        expPresenter.setArgs()
-
-
+        //Setting listeners to buttons
         buttonOnClick(cosButton, ExpPresenter.COS) //Cos Button
         buttonOnClick(sinButton, ExpPresenter.SIN) //Sin Button
         buttonOnClick(tanButton, ExpPresenter.TAN) //Tan Button
@@ -97,5 +93,16 @@ class ExpressionFragment : Fragment() {
         button.setOnClickListener {
             expPresenter.addFunction(flag)
         }
+    }
+
+    //View params for a presenter
+    private fun setViews() {
+
+        varSp = varSpinner
+        //Setting base items to spinner
+        expPresenter.createBaseItems()
+        dispET = displayET
+        expTitleTV = expTitle
+        expPresenter.setArgs()
     }
 }

@@ -5,9 +5,7 @@ import android.content.Context
 import com.labralab.smartcalkulator.dependencyInjection.*
 import io.realm.Realm
 
-/**
- * Created by pc on 05.03.2018.
- */
+
 class App : Application() {
 
     lateinit var context: Context
@@ -17,6 +15,8 @@ class App : Application() {
         lateinit var appComponents: AppComponents
         var presenterComponents: PresenterComponents? = null
 
+
+        //Adding local singletons
         fun plusPresenters(): PresenterComponents {
 
             presenterComponents?.let {
@@ -28,6 +28,8 @@ class App : Application() {
             return presenterComponents!!
         }
 
+
+        //Removing local singletons
         fun removePresenterComponents(){
             presenterComponents = null
         }
@@ -35,9 +37,14 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+
+        //Creating global singletons
         context = applicationContext
         appComponents = buildComponents()
 
+
+        //Starting Realm
         Realm.init(context)
     }
 

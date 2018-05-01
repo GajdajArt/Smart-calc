@@ -46,12 +46,14 @@ class ParametersFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        //Running view
         setViews()
-
         paramsPresenter.getResultList()
         paramsPresenter.showHint()
         paramsPresenter.changeMainTVContent()
 
+
+        //Setting listeners to buttons
         buttonOnClick(oneButton, ParamsPresenter.ONE)
         buttonOnClick(twoButton, ParamsPresenter.TWO)
         buttonOnClick(threeButton, ParamsPresenter.THREE)
@@ -62,20 +64,6 @@ class ParametersFragment : Fragment() {
         buttonOnClick(eytButton, ParamsPresenter.EYT)
         buttonOnClick(nineButton, ParamsPresenter.NINE)
         buttonOnClick(zeroButton, ParamsPresenter.ZERO)
-
-        numAfterPoint.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                paramsPresenter.changeNumAfterPoint(seekBar.progress)
-            }
-        })
 
         nextVarButton.setOnClickListener {
             paramsPresenter.nextOrDone()
@@ -101,6 +89,21 @@ class ParametersFragment : Fragment() {
             paramsPresenter.pasteResult()
         }
 
+        //listening to a numAfterPoint (SeekBar)
+        numAfterPoint.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                paramsPresenter.changeNumAfterPoint(seekBar.progress)
+            }
+        })
+
     }
 
     private fun buttonOnClick(button: Button, flag: Int) {
@@ -109,6 +112,7 @@ class ParametersFragment : Fragment() {
         }
     }
 
+    //View params for a presenter
     private fun setViews() {
 
         hintTV = expTitleInPF

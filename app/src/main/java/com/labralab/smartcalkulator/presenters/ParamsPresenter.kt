@@ -64,6 +64,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     }
 
+    //init all params
     private fun initThis() {
 
         bufferNum = StringBuilder()
@@ -89,6 +90,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
         backStack.push(baseExp)
     }
 
+    //introduction of figures
     fun setNumber(flag: Int) {
 
         if (firstNumAfterPoint) {
@@ -125,6 +127,7 @@ class ParamsPresenter(var paramsFragment: ParametersFragment) {
 
     }
 
+    //adding point
     fun insertPoint() {
 
         if (!isPoint && bufferNum.isNotEmpty()) {

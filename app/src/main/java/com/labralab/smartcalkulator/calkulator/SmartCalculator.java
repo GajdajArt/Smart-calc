@@ -4,11 +4,34 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-/**
- * Created by pc on 07.09.2017.
- */
 
 public class SmartCalculator {
+
+    /**
+     * - Формула в формате String поступает в метод calculate(String input, int isRad).
+     * - За тем в методе onReplace(String input) все тригонометрические функции заменяються
+     * однобукенными обозначениями.
+     * - Далее происходит поэтапное решение всех тригометрических функций. Если аргументы
+     * этих функций являються математическими выражениями то вначале находиться решение
+     * этих выражений методом описанным далее.
+     * - Выражение (без тригонометрических функций!) переводим в постфиксную запись
+     * (Обратная польская нотация) в методе getExpression(String input).
+     * - В метод counting(String input) передаем постфиксную запись и получаем решение типа double.
+     */
+
+    //"Входной" метод класса
+    static public double calculate(String input, int isRad) {
+        //Заменяем тригонометрические функции на буквы
+        String afterReplace = onReplace(input);
+        //Находим решение всех тригометрических функций
+        String noTrigonom = solveTrigonometry(afterReplace, isRad);
+        //Преобразовываем выражение в постфиксную запись
+        String output = getExpression(noTrigonom);
+        //Решаем полученное выражение
+        double result = counting(output);
+        //Возвращаем результат
+        return result;
+    }
 
 
     //Метод возвращает true, если проверяемый символ - разделитель ("пробел" или "равно")
@@ -75,15 +98,7 @@ public class SmartCalculator {
     }
 
 
-    //"Входной" метод класса
-    static public double calculate(String input, int isRad) {
 
-        String afterReplace = onReplace(input);
-        String noTrigonom = solveTrigonometry(afterReplace, isRad);
-        String output = getExpression(noTrigonom); //Преобразовываем выражение в постфиксную запись
-        double result = counting(output); //Решаем полученное выражение
-        return result; //Возвращаем результат
-    }
 
     //Решаем все тригонометрические функции
     static private String solveTrigonometry(String input, int isRad) {
